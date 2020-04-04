@@ -5,7 +5,7 @@ pipeline {
       stage('Hello') {
          steps {
             bat 'echo first>>layers/first.txt'
-            bat 'echo second>>second.txt
+            bat 'echo second>>second.txt'
          }
       }
    }
