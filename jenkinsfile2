@@ -1,12 +1,32 @@
 pipeline {
-   agent any
+    agent any
+    
+    stages {
+        stage('Write to file') { 
+            steps {
+                bat "echo %workbench_name%"
+                bat "echo %tfvars% >> layers/%workbench_name%.tfvars"
+            }
+        }
 
-   stages {
-      stage('Hello') {
-         steps {
-            bat 'echo first>>layers/first.txt'
-            bat 'echo second>>%workbench_name%.txt'
-         }
-      }
-   }
+        stage('Terraform Init') { 
+            steps {
+                bat 'terraform init'
+            }
+        }
+
+        stage('Terraform Plan') { 
+            steps {
+                sh 'terraform plan -var-file="%workbench_name%.tfvars"'
+            }
+        }
+        stage('Terraform Apply') { 
+            steps {
+                bat 'echo "Apply"'
+                sh 'terraform apply -auto-approve -var-file="%workbench_name%.tfvars"'
+            }
+        }
+
+	}
+
 }
