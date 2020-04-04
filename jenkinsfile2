@@ -4,8 +4,8 @@ pipeline {
    stages {
       stage('Hello') {
          steps {
-            bat 'echo starteded >> start.txt'
             bat '@echo %tfvars% >> mytfvars123.tfvars'
+            bat 'echo suc'
          }
       }
    }
