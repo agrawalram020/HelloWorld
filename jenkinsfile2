@@ -17,13 +17,13 @@ pipeline {
 
         stage('Terraform Plan') { 
             steps {
-                bat 'terraform plan -var-file="%workbench_name%.tfvars"'
+                bat 'terraform plan -var-file="var.tfvars"'
             }
         }
         stage('Terraform Apply') { 
             steps {
                 bat 'echo "Apply"'
-                bat 'terraform apply -auto-approve -var-file="%workbench_name%.tfvars"'
+                bat 'terraform apply -auto-approve -var-file="var.tfvars"'
             }
         }
 
