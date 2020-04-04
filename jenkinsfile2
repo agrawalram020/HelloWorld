@@ -5,7 +5,7 @@ pipeline {
         stage('Write to file') { 
             steps {
                 bat "echo %workbench_name%"
-                bat "echo %tfvars% >> %workbench_name%.tfvars"
+                bat "echo %tfvars% >> var.tfvars"
             }
         }
 
@@ -17,13 +17,13 @@ pipeline {
 
         stage('Terraform Plan') { 
             steps {
-                sh 'terraform plan -var-file="%workbench_name%.tfvars"'
+                bat 'terraform plan -var-file="%workbench_name%.tfvars"'
             }
         }
         stage('Terraform Apply') { 
             steps {
                 bat 'echo "Apply"'
-                sh 'terraform apply -auto-approve -var-file="%workbench_name%.tfvars"'
+                bat 'terraform apply -auto-approve -var-file="%workbench_name%.tfvars"'
             }
         }
 
