@@ -5,7 +5,7 @@ pipeline {
         stage('Write to file') { 
             steps {
                 bat "echo %workbench_name%"
-                bat "echo %tfvars% >> layers/%workbench_name%.tfvars"
+                bat "echo %tfvars% >> %workbench_name%.tfvars"
             }
         }
 
