@@ -1,1 +1,11 @@
-echo rammmm>>succ
+pipeline {
+   agent any
+
+   stages {
+      stage('Hello') {
+         steps {
+            bat 'echo ram>>succ.txt'
+         }
+      }
+   }
+}
