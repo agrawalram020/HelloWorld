@@ -6,7 +6,7 @@ pipeline {
          steps {
             bat 'set t=^&echo.'
             bat 'echo started >>start.txt'
-            bat 'echo %tfvars% >> mytfvars123.tfvars'
+            bat '@echo %tfvars% >> mytfvars123.tfvars'
          }
       }
    }
