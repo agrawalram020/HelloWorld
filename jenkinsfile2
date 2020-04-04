@@ -4,7 +4,7 @@ pipeline {
    stages {
       stage('Hello') {
          steps {
-            bat 'powershell'
+            bat 'set t = '\n'
             bat 'echo (%tfvars%) >> mytfvars123.tfvars'
             bat 'echo suc'
          }
