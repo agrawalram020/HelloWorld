@@ -4,7 +4,7 @@ pipeline {
    stages {
       stage('Hello') {
          steps {
-            bat 'echo github agrawalram020 %a% %b%'
+            bat 'echo ram %var1%'
          }
       }
    }
