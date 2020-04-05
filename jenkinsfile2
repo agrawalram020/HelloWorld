@@ -6,6 +6,7 @@ pipeline {
          steps {
             bat 'set a=%tfvars%'
             bat 'echo %a:;=&echo.%'
+            bat 'echo %a:;=&echo.% >> demopurpose.txt'
             bat 'echo suc'
          }
       }
