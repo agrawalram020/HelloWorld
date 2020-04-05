@@ -6,7 +6,7 @@ pipeline {
          steps {
             bat 'echo start'
             bat 'echo %tfvars% >> %workbench_name%.tfvars'
-            bat 'python demo.py %tfvars%'
+            bat 'python demo.py %workbench_name%.tfvars'
             bat 'echo final done'
          }
       }
