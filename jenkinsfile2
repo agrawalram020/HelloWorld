@@ -2,13 +2,33 @@ pipeline {
    agent any
 
    stages {
-      stage('Hello') {
-         steps {
-            bat 'echo start'
-            bat 'echo %tfvars% >> %workbench_name%.tfvars'
-            bat 'python demo.py %workbench_name%.tfvars'
-            bat 'echo final done'
-         }
-      }
+        stage('Hello') {
+            steps {
+				bat 'echo start'
+				bat 'echo %tfvars% >> %workbench_name%.tfvars'
+				bat 'python demo.py %workbench_name%.tfvars'
+				bat 'echo final done'
+				}
+		}
+	  
+		stage('Terraform Init') { 
+			steps {
+				bat 'terraform init'
+			}
+		}
+		
+		stage('Terraform Plan') { 
+			steps {
+					bat 'terraform plan -var-file="%workbench_name%.tfvars"'
+			}
+		}
+		
+		stage('Terraform Apply') { 
+            steps {
+                bat 'echo "Apply"'
+                bat 'terraform apply -auto-approve -var-file="%workbench_name%.tfvars"'
+            }
+        }
+		
    }
 }
