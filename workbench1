@@ -1,1 +1,11 @@
-bat 'echo workbench1 is working'
+pipeline {
+   agent any
+
+   stages {
+      stage('Hello') {
+         steps {
+            bat 'echo ram working'
+         }
+      }
+   }
+}
