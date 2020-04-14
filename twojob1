@@ -1,1 +1,11 @@
-hell
+pipeline {
+   agent any
+
+   stages {
+      stage('Hello') {
+         steps {
+            bat 'echo ram %tfvars%'
+         }
+      }
+   }
+}
