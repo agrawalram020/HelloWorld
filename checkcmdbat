@@ -7,3 +7,6 @@ pipeline {
             bat 'echo ram pushd dev'
          }
       }
+      
+     }
+   }
