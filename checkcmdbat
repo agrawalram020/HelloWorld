@@ -5,7 +5,9 @@ pipeline {
       stage('Hello') {
          steps {
             bat 'echo ram'
-            bat 'pushd C:/Users/RAM/.jenkins/workspace/checkcmdbat/dev'
+            dir('dev'){
+            bat 'echo yes'
+            }
             bat 'echo now'
          }
       }
