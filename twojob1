@@ -5,6 +5,7 @@ pipeline {
       stage('Hello') {
          steps {
             bat 'echo ram-> %tfvars%'
+            bat 'del fordelete'
          }
       }
    }
