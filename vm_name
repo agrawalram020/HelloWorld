@@ -4,7 +4,7 @@ pipeline {
    stages {
       stage('Hello') {
          steps {
-	    dir('dev/%workbench_name%'){
+	    dir("dev/${workbench_name}"){
                bat 'echo %tfvars%>>test.tfvars'
 	       bat 'echo line3_in_vm_name'
                bat 'echo %workbench_name%'
@@ -15,7 +15,7 @@ pipeline {
       
       stage('Terraform Init') { 
 			steps {
-            dir('dev/%workbench_name%'){
+            dir("dev/${workbench_name}"){
             bat 'terraform init'
             }
 			}
@@ -23,7 +23,7 @@ pipeline {
 		
 		stage('Terraform Plan') { 
 			steps {
-               dir('dev/%workbench_name%'){
+               dir("dev/${workbench_name}"){
                bat 'terraform plan -var-file="test.tfvars"'
                }
 					
@@ -33,7 +33,7 @@ pipeline {
 		stage('Terraform Apply') { 
             steps {
                 bat 'echo "Apply"'
-                dir('dev/%workbench_name%'){
+                dir("dev/${workbench_name}"){
                bat 'terraform apply -auto-approve -var-file="test.tfvars"'
                }
             }
@@ -42,7 +42,7 @@ pipeline {
 	stage('after success delete test.tfvars') { 
             steps {
                 bat 'echo deleting files'
-                dir('dev/%workbench_name%'){
+                dir("dev/${workbench_name}"){
                bat 'del test.tfvars'
                }
             }
