@@ -5,8 +5,11 @@ pipeline {
       stage('Hello') {
          steps {
             bat 'echo ram'
-            dir('dev/%var1%'){
-            bat 'echo yes'
+            dir('dev'){
+            bat 'echo %var1%'
+               dir('%var1%'){
+                bat 'echo %var1%'
+                   }
             }
             bat 'echo now'
          }
