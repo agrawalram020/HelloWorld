@@ -6,7 +6,7 @@ pipeline {
          steps {
             bat 'echo %tfvars%>>var1.txt'
             bat 'echo line2'
-            bat 'echo %workbench_name%
+            bat 'echo %workbench_name%'
          }
       }
    }
