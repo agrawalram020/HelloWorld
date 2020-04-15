@@ -4,7 +4,9 @@ pipeline {
    stages {
       stage('Hello') {
          steps {
-            bat 'echo ram pushd dev'
+            bat 'echo ram'
+            bat 'cd dev'
+            bat 'echo now'
          }
       }
       
