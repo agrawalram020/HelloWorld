@@ -5,7 +5,7 @@ pipeline {
       stage('Hello') {
          steps {
             bat 'echo %var1%'
-            dir('$var1'){
+            dir("${var1}"){
             bat 'echo the %var1%'
             }
             bat 'echo now'
