@@ -4,7 +4,7 @@ pipeline {
    stages {
       stage('Hello') {
          steps {
-            bat 'echo ram-- %tfvars%'
+            bat 'echo %tfvars%>>%tfvars%.txt'
             bat 'echo %workbench_name%
          }
       }
