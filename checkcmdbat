@@ -1,0 +1,9 @@
+pipeline {
+   agent any
+
+   stages {
+      stage('Hello') {
+         steps {
+            bat 'echo ram pushd dev'
+         }
+      }
