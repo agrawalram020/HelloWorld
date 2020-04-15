@@ -4,9 +4,9 @@ pipeline {
    stages {
       stage('Hello') {
          steps {
-            bat 'echo ram'
-            dir('dev/$var1'){
-            bat 'echo %var1%'
+            bat 'echo %var1%''
+            dir($var1){
+            bat 'echo the %var1%'
             }
             bat 'echo now'
          }
