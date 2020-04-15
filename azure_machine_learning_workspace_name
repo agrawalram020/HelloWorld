@@ -4,10 +4,12 @@ pipeline {
    stages {
       stage('Hello') {
          steps {
-            bat 'echo %tfvars%>>dev/%workbench_name%/test.tfvars'
-            bat 'echo line3_in_vm_name'
-            bat 'echo %workbench_name%'
-            bat 'python demo.py dev/%workbench_name%/test.tfvars'
+	    dir('dev/azure_machine_learning_workspace_name'){
+               bat 'echo %tfvars%>>test.tfvars'
+	       bat 'echo line3_in_vm_name'
+               bat 'echo %workbench_name%'
+               bat 'python demo.py test.tfvars'
+               }
          }
       }
       
