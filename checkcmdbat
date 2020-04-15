@@ -7,6 +7,9 @@ pipeline {
             bat 'echo ram'
             dir('dev'){
             bat 'echo %var1%'
+                dir('%var1%'){
+                bat 'echo in second folder abc'
+                   }
             }
             bat 'echo now'
          }
