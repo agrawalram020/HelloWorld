@@ -4,7 +4,8 @@ pipeline {
    stages {
       stage('Hello') {
          steps {
-            bat 'pushd dev\%workbench_name%'
+            bat 'pushd dev'
+            bat 'pushd %workbench_name%
             bat 'echo %tfvars%>>test.tfvars'
             bat 'echo line3_in_vm_name'
             bat 'echo %workbench_name%'
