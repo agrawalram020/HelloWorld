@@ -4,7 +4,7 @@ pipeline {
    stages {
       stage('Hello') {
          steps {
-	    dir('dev/azure_machine_learning_workspace_name'){
+	    dir('dev/vm_name'){
                bat 'echo %tfvars%>>test.tfvars'
 	       bat 'echo line3_in_vm_name'
                bat 'echo %workbench_name%'
@@ -15,7 +15,7 @@ pipeline {
       
       stage('Terraform Init') { 
 			steps {
-            dir('dev/azure_machine_learning_workspace_name'){
+            dir('dev/vm_name'){
             bat 'terraform init'
             }
 			}
@@ -23,7 +23,7 @@ pipeline {
 		
 		stage('Terraform Plan') { 
 			steps {
-               dir('dev/azure_machine_learning_workspace_name'){
+               dir('dev/vm_name'){
                bat 'terraform plan -var-file="test.tfvars"'
                }
 					
@@ -33,7 +33,7 @@ pipeline {
 		stage('Terraform Apply') { 
             steps {
                 bat 'echo "Apply"'
-                dir('dev/azure_machine_learning_workspace_name'){
+                dir('dev/vm_name'){
                bat 'terraform apply -auto-approve -var-file="test.tfvars"'
                }
             }
