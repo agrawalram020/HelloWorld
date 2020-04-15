@@ -10,5 +10,32 @@ pipeline {
             bat 'python demo.py dev/%workbench_name%/test.tfvars'
          }
       }
+      
+      stage('Terraform Init') { 
+			steps {
+            dir('dev/azure_machine_learning_workspace_name'){
+            bat 'terraform init'
+            }
+			}
+		}
+		
+		stage('Terraform Plan') { 
+			steps {
+               dir('dev/azure_machine_learning_workspace_name'){
+               bat 'terraform plan -var-file="test.tfvars"'
+               }
+					
+			}
+		}
+		
+		stage('Terraform Apply') { 
+            steps {
+                bat 'echo "Apply"'
+                dir('dev/azure_machine_learning_workspace_name'){
+               bat 'terraform apply -auto-approve -var-file="test.tfvars"'
+               }
+            }
+        }
+        
    }
 }
