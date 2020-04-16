@@ -8,7 +8,7 @@ pipeline {
             }
         }
     }
-    
+    agent any
     stages {
         stage('second stage') {
             steps {
