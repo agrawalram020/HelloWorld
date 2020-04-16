@@ -8,14 +8,14 @@ pipeline {
             }
         }
     }
-    agent any
     
     stages {
         stage('second stage') {
             steps {
                 echo "second step from 2 stage"
+                emailext body: 'success in second stage', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
             }
-            emailext body: 'success in second stage', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
+            
         }
     }
 }
