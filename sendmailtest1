@@ -9,7 +9,7 @@ pipeline {
         }
                 stage('send mail') {
             steps {
-                emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'from step ${var1}'
+                emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: "from step ${var1}"
             }
         }
     }
