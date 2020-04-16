@@ -47,6 +47,12 @@ pipeline {
                }
             }
         }
+	
+	                stage('send mail') {
+            steps {
+                emailext body: "${var1}", recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: "the resource  ${var1} successfully created."
+            }
+        }
         
    }
 }
