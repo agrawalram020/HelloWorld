@@ -1,16 +1,21 @@
 pipeline {
-   agent any
-
-   stages {
-      stage('Hello') {
-         steps {
-            bat 'echo %var1%'
-            dir("dev/${var1}"){
-            bat 'echo the %var1%'
+    agent any
+    
+    stages {
+        stage('Ok') {
+            steps {
+                echo "Ok"
             }
-            bat 'echo now'
-         }
-      }
-      
-     }
-   }
+        }
+    }
+    agent any
+    
+    stages {
+        stage('second stage') {
+            steps {
+                echo "second step from 2 stage"
+            }
+            emailext body: 'success in second stage', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
+        }
+    }
+}
