@@ -48,11 +48,13 @@ pipeline {
             }
         }
 	
-	                stage('send mail') {
-            steps {
-                emailext body: "${workbench_name}", recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: "the resource  ${workbench_name} successfully created."
-            }
+post {
+        always {
+	        bat 'echo deleting files'
+                dir("dev/${workbench_name}"){
+               bat 'del test.tfvars'
+               }
+            emailext body: "${workbench_name}", recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: "${workbench_name}"
         }
-        
-   }
+    }
 }
