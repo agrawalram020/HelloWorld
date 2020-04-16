@@ -39,13 +39,6 @@ pipeline {
             }
         }
 	
-	stage('after success delete test.tfvars') { 
-            steps {
-                bat 'echo deleting files'
-                dir("dev/${workbench_name}"){
-               bat 'del test.tfvars'
-               }
-            }
         }
 	
 post {
