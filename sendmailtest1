@@ -10,6 +10,12 @@ pipeline {
                 stage('send mail') {
             steps {
                 emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: "from step ${var1}"
+                                script {
+                    def response = httpRequest 'http://127.0.0.1:8000/updatetocreated'
+                    def json = new JsonSlurper().parseText(response.content)
+                    echo "Status: ${response.status}"
+                    echo "Dogs: ${json.message.keySet()}"
+                }
             }
         }
     }
