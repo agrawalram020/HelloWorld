@@ -10,7 +10,7 @@ pipeline {
     }
     post {
         always {
-            bat 'success in postsss'
+            bat 'echo success in postsss'
             emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'chech1'
         }
     }
