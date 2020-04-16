@@ -10,13 +10,7 @@ pipeline {
     }
     post {
         always {
-                stages {
-        stage('second stage') {
-            steps {
-                echo "success on second stage"
-            }
-        }
-    }
+            bat 'success in postsss'
             emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'chech1'
         }
     }
