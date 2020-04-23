@@ -1,2 +1,2 @@
 resource_group_name = "test-gp"
-location = "westus2"
+location = "westus22"
