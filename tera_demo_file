@@ -4,8 +4,8 @@ pipeline {
    stages {
       stage('Hello') {
          steps {
-	       bat 'echo this is the first step'
-               bat 'echo second line of first step'
+	    
+               bat 'echo hello stage'
          }
       }
       
@@ -16,40 +16,24 @@ pipeline {
 		}
 		
 		stage('Terraform Plan') { 
-			try{
 			steps {
-               bat 'echo this is tera plan step'
-               bat 'terraform plan -var-file="test.tfvars"'
-			}
-			}
-			catch(Exception e){
-				steps {
-               bat 'echo fail in plan'
-			}
+               bat 'terraform plan -var-file="test.tfvars"'					
 			}
 		}
 		
 		stage('Terraform Apply') { 
-            try{
-	    steps {
+            steps {
                 bat 'echo "Apply"'
                bat 'terraform apply -auto-approve -var-file="test.tfvars"'
             }
-	    }
-	    catch(Exception e){
-	    	steps {
-                bat 'echo fail in apply'
-            }
-	    }
         }
 	
         }
 	
 post {
         always {
-	             bat 'echo in the post step'
-               bat 'echo sending the mail'
-            emailext body: 'jfldsfjdlsfjdslfjdslf', subject: 'vm created from demo-tera file', to: 'agrawalram020@gmail.com'
+	        bat 'echo deleting files'
+            	emailext body: 'this is tyry cathss', subject: 'try catch block', to: 'agrawalram020@gmail.com'
         }
     }
 }
