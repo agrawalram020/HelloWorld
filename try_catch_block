@@ -1,0 +1,45 @@
+pipeline {
+   agent any
+
+   stages {
+      stage('Hello') {
+         steps {
+	    
+               bat 'echo hello stage'
+         }
+      }
+      
+      stage('Terraform Init') { 
+			steps {
+            bat 'terraform init'
+			}
+		}
+		
+		try{
+    stage('Terraform Plan') { 
+			steps {
+               bat 'terraform plan -var-file="test.tfvars"'					
+			      }
+		                        }
+     }
+     catch(Exception e)
+     {
+     bat 'echo error in plan'
+     }
+		
+		stage('Terraform Apply') { 
+            steps {
+                bat 'echo "Apply"'
+               bat 'terraform apply -auto-approve -var-file="test.tfvars"'
+            }
+        }
+	
+        }
+	
+post {
+        always {
+	        bat 'echo deleting files'
+            	emailext body: 'this is tyry cathss', subject: 'try catch block', to: 'agrawalram020@gmail.com'
+        }
+    }
+}
