@@ -16,17 +16,31 @@ pipeline {
 		}
 		
 		stage('Terraform Plan') { 
+			try{
 			steps {
                bat 'echo this is tera plan step'
                bat 'terraform plan -var-file="test.tfvars"'
 			}
+			}
+			catch(Exception e){
+				steps {
+               bat 'echo fail in plan'
+			}
+			}
 		}
 		
 		stage('Terraform Apply') { 
-            steps {
+            try{
+	    steps {
                 bat 'echo "Apply"'
                bat 'terraform apply -auto-approve -var-file="test.tfvars"'
             }
+	    }
+	    catch(Exception e){
+	    	steps {
+                bat 'echo fail in apply'
+            }
+	    }
         }
 	
         }
