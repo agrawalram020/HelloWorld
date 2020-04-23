@@ -1,0 +1,41 @@
+pipeline {
+   agent any
+
+   stages {
+      stage('Hello') {
+         steps {
+	       bat 'echo this is the first step'
+               bat 'echo second line of first step'
+         }
+      }
+      
+      stage('Terraform Init') { 
+			steps {
+            bat 'terraform init'
+			}
+		}
+		
+		stage('Terraform Plan') { 
+			steps {
+               bat 'echo this is tera plan step'
+               bat 'terraform plan -var-file="test.tfvars"'
+			}
+		}
+		
+		stage('Terraform Apply') { 
+            steps {
+                bat 'echo "Apply"'
+               bat 'terraform apply -auto-approve -var-file="test.tfvars"'
+            }
+        }
+	
+        }
+	
+post {
+        always {
+	             bat 'echo in the post step'
+               bat 'echo sending the mail'
+            emailext body: 'jfldsfjdlsfjdslfjdslf', subject: 'vm created from demo-tera file', to: 'agrawalram020@gmail.com'
+        }
+    }
+}
