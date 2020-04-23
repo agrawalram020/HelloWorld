@@ -9,12 +9,8 @@ pipeline {
         }
                 stage('send mail') {
             steps {
-                emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: "from step ${var1}"
-                                script {
-                    httpRequest customHeaders: {"name": "FOO"}, url: 'http://127.0.0.1:8000/updatetocreated'
-                    echo 'call url success'
                     emailext body: 'jfldsfjdlsfjdslfjdslf', subject: 'from extended email demo', to: 'agrawalram020@gmail.com'
-                }
+
             }
         }
     }
