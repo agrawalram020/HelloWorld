@@ -45,7 +45,7 @@ post {
         always {
 	        bat 'echo deleting files'
                 dir("dev/${workbench_name}"){
-               bat 'del test.tfvars'
+               
                }
             emailext body: "The resource ${workbench_name} successfully created", recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: "${workbench_name}"
         }
