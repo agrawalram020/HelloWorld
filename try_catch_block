@@ -1,45 +1,26 @@
 pipeline {
-   agent any
-
-   stages {
-      stage('Hello') {
-         steps {
-	    
-               bat 'echo hello stage'
-         }
+  agent any
+  stages {
+    stage("Run unit tests"){
+      steps {
+        script {
+          try {
+            bat 'echo in the try block'
+          }
+	  catch(Exception e)
+	  {
+	  bat 'echo in catch block'
+	  }
+	  finally {
+            bat 'echo finally'
+          }
+        }
       }
-      
-      stage('Terraform Init') { 
-			steps {
-            bat 'terraform init'
-			}
-		}
-		
-		try{
-    stage('Terraform Plan') { 
-			steps {
-               bat 'terraform plan -var-file="test.tfvars"'					
-			      }
-		                        }
-     }
-     catch(Exception e)
-     {
-     bat 'echo error in plan'
-     }
-		
-		stage('Terraform Apply') { 
-            steps {
-                bat 'echo "Apply"'
-               bat 'terraform apply -auto-approve -var-file="test.tfvars"'
-            }
-        }
-	
-        }
-	
-post {
-        always {
-	        bat 'echo deleting files'
-            	emailext body: 'this is tyry cathss', subject: 'try catch block', to: 'agrawalram020@gmail.com'
-        }
     }
+    stage ('Speak') {
+      steps{
+        echo "Hello, CONDITIONAL"
+      }
+    }
+  }
 }
