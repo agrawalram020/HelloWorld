@@ -1,53 +1,127 @@
-pipeline {
-   agent any
+pipeline 
+{
+    agent any
 
-   stages {
-      stage('Hello') {
-         steps {
-	    dir("dev/${workbench_name}"){
-               bat 'echo %tfvars%>>test.tfvars'
-	       bat 'echo line3_in_vm_name'
-               bat 'echo %workbench_name%'
-               bat 'python demo.py test.tfvars'
-               }
-         }
-      }
+    stages 
+	{
+        stage('Hello') 
+		{
+            steps 
+			{
+				script 
+				{
+					try 
+					{
+						dir("dev/${workbench_name}")
+						{
+							bat 'echo %tfvars%>>test.tfvars'
+							bat 'echo line3_in_vm_name'
+							bat 'echo %workbench_name%'
+							bat 'python demo.py test.tfvars'
+						}
+					}
+					catch(Exception e)
+					{
+						bat 'echo error in Hello step'
+					}
+					finally 
+					{
+						bat 'echo final of hello step'
+					}
+				}
+			}
+		}
       
-      stage('Terraform Init') { 
-			steps {
-            dir("dev/${workbench_name}"){
-            bat 'terraform init'
-            }
+      stage('Terraform Init') 
+	    { 
+			steps 
+			{
+				script 
+				{
+					try 
+					{
+						dir("dev/${workbench_name}")
+						{
+							bat 'terraform init'
+						}
+					}
+					catch(Exception e)
+					{
+						bat 'echo error in terraform init'
+					}
+					finally 
+					{
+						bat 'echo final of tera init step'
+					}
+				}
 			}
 		}
 		
-		stage('Terraform Plan') { 
-			steps {
-               dir("dev/${workbench_name}"){
-               bat 'terraform plan -var-file="test.tfvars"'
-               }
+		
+		stage('Terraform Plan') 
+		{ 
+			steps 
+			{
+                script 
+				{
+					try 
+					{
+						dir("dev/${workbench_name}")
+						{
+							bat 'terraform plan -var-file="test.tfvars"'
+						}
+					}
+					catch(Exception e)
+					{
+						bat 'echo error in terraform plan'
+					}
+					finally 
+					{
+						bat 'echo final of plan step'
+					}
+				}
 					
 			}
 		}
 		
-		stage('Terraform Apply') { 
-            steps {
-                bat 'echo "Apply"'
-                dir("dev/${workbench_name}"){
-               bat 'terraform apply -auto-approve -var-file="test.tfvars"'
-               }
-            }
-        }
+		stage('Terraform Apply') 
+		{ 
+            steps 
+			{
+                script 
+				{
+					try 
+					{
+						bat 'echo "Apply"'
+						dir("dev/${workbench_name}")
+						{
+							bat 'terraform apply -auto-approve -var-file="test.tfvars"'
+						}
+					}
+					catch(Exception e)
+					{
+						bat 'echo error in terraform apply'
+					}
+					finally 
+					{
+						bat 'echo final of apply step'
+					}
+				}
+			}
+		}
 	
-        }
+	}
 	
-post {
-        always {
-	        bat 'echo deleting files'
-                dir("dev/${workbench_name}"){
-                bat 'del test.tfvars'
-               }
-            emailext body: "The resource ${workbench_name} successfully created", recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: "${workbench_name}"
-        }
-    }
+	post 
+	{
+		always 
+		{
+			bat 'echo deleting files'
+			dir("dev/${workbench_name}")
+			{
+				bat 'del test.tfvars'
+			}
+			emailext body: "The resource ${workbench_name} successfully created", recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: "${workbench_name}"
+		}
+	}
 }
