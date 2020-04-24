@@ -5,11 +5,11 @@ pipeline {
       steps {
         script {
           try {
-            bat 'echo in the try block'
+            bat 'echo in the try block
           }
 	  catch(Exception e)
 	  {
-	  bat 'echo in catch block'
+	  bat 'echo in catch block %e% $e'
 	  }
 	  finally {
             bat 'echo finally'
