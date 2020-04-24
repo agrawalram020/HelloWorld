@@ -10,6 +10,7 @@ pipeline {
 	  catch(Exception e)
 	  {
 	  bat 'echo in catch block %e% $e'
+	  System.out.println(e)
 	  echo e
 	  }
 	  finally {
