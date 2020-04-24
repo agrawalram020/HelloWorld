@@ -10,6 +10,7 @@ pipeline {
 	  catch(Exception e)
 	  {
 	  bat 'echo in catch block %e% $e'
+	  echo e
 	  }
 	  finally {
             bat 'echo finally'
