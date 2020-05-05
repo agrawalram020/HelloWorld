@@ -5,7 +5,7 @@ pipeline {
         stage('Ok') {
             steps {
                 echo "Ok"
-                httpRequest "http://httpbin.org"
+                httpRequest "http://127.0.0.1:8000/demourlcheck"
             }
         }
                 stage('send mail') {
