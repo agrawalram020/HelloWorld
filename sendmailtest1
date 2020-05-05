@@ -5,6 +5,7 @@ pipeline {
         stage('Ok') {
             steps {
                 echo "Ok"
+                httpRequest "http://httpbin.org"
             }
         }
                 stage('send mail') {
