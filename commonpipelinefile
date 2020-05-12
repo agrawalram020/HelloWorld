@@ -15,6 +15,9 @@ pipeline
 						dir("dev/${workbench_name}")
 						{
 							bat 'echo %tfvars%>>test.tfvars'
+							bat 'echo service_id %workbench_name%'
+							bat 'echo workbench id %workbench_id%'
+							echo "${currentBuild.number}"
 							bat 'echo line3_in_vm_name'
 							bat 'echo %workbench_name%'
 							bat 'python demo.py test.tfvars'
