@@ -21,6 +21,7 @@ pipeline
 							bat 'echo line3_in_vm_name'
 							bat 'echo %workbench_name%'
 							bat 'python demo.py test.tfvars'
+							httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${workbench_name}/${currentBuild.number}"
 						}
 					}
 					catch(Exception e)
