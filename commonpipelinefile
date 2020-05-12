@@ -73,7 +73,7 @@ pipeline
 					{
 						dir("dev/${workbench_name}")
 						{
-							bat 'terraform plan -var-file="test.tfvars"'
+							bat 'echo terraformplan'
 						}
 					}
 					catch(Exception e)
@@ -100,7 +100,7 @@ pipeline
 						bat 'echo "Apply"'
 						dir("dev/${workbench_name}")
 						{
-							bat 'terraform apply -auto-approve -var-file="test.tfvars"'
+							bat 'echo terraformapply'
 						}
 					}
 					catch(Exception e)
@@ -126,7 +126,7 @@ pipeline
 			{
 				bat 'del test.tfvars'
 			}
-			emailext body: "The resource ${workbench_name} successfully created", recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: "${workbench_name}"
+			emailext body: "The resource ${workbench_id} successfully created", recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: "${workbench_name}"
 		}
 	}
 }
