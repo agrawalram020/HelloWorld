@@ -19,7 +19,7 @@ pipeline
 							bat 'echo service_no %service_no%'
 							echo "${currentBuild.number}"
 							bat 'echo line3_in_vm_name'
-							bat 'echo %workbench_name%'
+							bat 'echo %workbench_name11%'
 							bat 'python demo.py test.tfvars'
 							httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/${currentBuild.number}"
 						}
@@ -48,7 +48,7 @@ pipeline
 						dir("dev/${workbench_name}")
 						{
 							bat 'terraform init'
-							bat 'dfdf
+							echo "${currentBuild.nuwqmber}"
 						}
 					}
 					catch(Exception e)
