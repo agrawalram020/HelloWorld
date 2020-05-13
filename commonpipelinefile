@@ -21,12 +21,13 @@ pipeline
 							bat 'echo line3_in_vm_name'
 							bat 'echo %workbench_name%'
 							bat 'python demo.py test.tfvars'
-							httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/${currentBuild.number}"
+							httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/1"
 						}
 					}
 					catch(Exception e)
 					{
 						bat 'exception in basic-work stage'
+						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/5"
 						error "This pipeline stops in basic_work"
 						echo e.getMessage()
 						error "This pipeline stops in hello"
@@ -48,13 +49,15 @@ pipeline
 					try 
 					{
 						dir("dev/${workbench_name}")
-						{
+						{	
+							httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/2"
 							bat 'echhho terraforminit'
 						}
 					}
 					catch(Exception e)
 					{
 						bat 'echo in init'
+						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/5"
 						echo err.getMessage()
 						error "This pipeline stops in init!"
 					}
@@ -77,11 +80,13 @@ pipeline
 					{
 						dir("dev/${workbench_name}")
 						{
+							httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/3"
 							bat 'echo terraformplan'
 						}
 					}
 					catch(Exception e)
 					{
+						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/5"
 						bat 'echo error in terraform plan'
 					}
 					finally 
@@ -102,6 +107,7 @@ pipeline
 					try 
 					{
 						bat 'echo "Apply"'
+						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/4"
 						dir("dev/${workbench_name}")
 						{
 							bat 'echo terraformapply'
@@ -109,6 +115,7 @@ pipeline
 					}
 					catch(Exception e)
 					{
+						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/5"
 						bat 'echo error in terraform apply'
 					}
 					finally 
