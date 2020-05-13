@@ -26,7 +26,8 @@ pipeline
 					}
 					catch(Exception e)
 					{
-						bat 'echo error in Hello step'
+						bat 'echo in hello'
+						echo e.getMessage()
 					}
 					finally 
 					{
@@ -47,11 +48,14 @@ pipeline
 						dir("dev/${workbench_name}")
 						{
 							bat 'terraform init'
+							bat 'dfdf
 						}
 					}
 					catch(Exception e)
 					{
-						bat 'echo error in terraform init'
+						bat 'echo in init'
+						echo err.getMessage()
+						bat 'exit'
 					}
 					finally 
 					{
