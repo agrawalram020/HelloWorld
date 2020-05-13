@@ -4,7 +4,7 @@ pipeline
 
     stages 
 	{
-        stage('Hello') 
+        stage('Basic_work') 
 		{
             steps 
 			{
@@ -19,14 +19,15 @@ pipeline
 							bat 'echo service_no %service_no%'
 							echo "${currentBuild.number}"
 							bat 'echo line3_in_vm_name'
-							bat 'echo %workbench_name11%'
+							bat 'echo %workbench_name%'
 							bat 'python demo.py test.tfvars'
 							httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/${currentBuild.number}"
 						}
 					}
 					catch(Exception e)
 					{
-						bat 'echo in hello'
+						bat 'exception in basic-work stage'
+						error "This pipeline stops in basic_work"
 						echo e.getMessage()
 						error "This pipeline stops in hello"
 					}
@@ -48,8 +49,7 @@ pipeline
 					{
 						dir("dev/${workbench_name}")
 						{
-							bat 'terraform init'
-							echo "${currentBuild.nuwqmber}"
+							bat 'echhho terraforminit'
 						}
 					}
 					catch(Exception e)
