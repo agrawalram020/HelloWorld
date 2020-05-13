@@ -28,6 +28,7 @@ pipeline
 					{
 						bat 'echo in hello'
 						echo e.getMessage()
+						error "This pipeline stops in hello"
 					}
 					finally 
 					{
@@ -55,7 +56,7 @@ pipeline
 					{
 						bat 'echo in init'
 						echo err.getMessage()
-						bat 'exit'
+						error "This pipeline stops in init!"
 					}
 					finally 
 					{
