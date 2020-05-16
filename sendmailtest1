@@ -11,9 +11,12 @@ pipeline {
         
         stage('wait'){
             steps {
+               script{
                   bat "echo start"
-                  httpRequest customHeaders: [[name: 'FOO', value: 'BAR']], url: 'http://127.0.0.1:8000/cwdname'
+                  def dir_name = pwd()
+                  httpRequest "http://127.0.0.1:8000/cwdname/param1=${dir_name}"
                   bat "echo success"
+                  }
                 }
         }
         
