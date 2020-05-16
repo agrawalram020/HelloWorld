@@ -11,9 +11,9 @@ pipeline {
         
         stage('wait'){
             steps {
-                  bat "echo wait start"
-                  sleep time: 20000, unit: 'MILLISECONDS'
-                  bat "echo wait end"
+                  bat "echo start"
+                  httpRequest customHeaders: [[name: 'FOO', value: 'BAR']], url: 'http://127.0.0.1:8000/cwdname'
+                  bat "echo success"
                 }
         }
         
