@@ -24,7 +24,7 @@ pipeline
 					}
 					catch(Exception e)
 					{
-						bat 'exception in basic-work stage'
+						bat 'echo exception in basic-work stage'
 						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/-1"
 						error "This pipeline stops in basic_work"
 						echo e.getMessage()
