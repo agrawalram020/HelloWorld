@@ -16,13 +16,13 @@ pipeline
 						{
 							bat 'echo %tfvars%>>test.tfvars'
 							bat 'python demo.py test.tfvars'
-							httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/1"
+							httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/20"
 						}
 					}
 					catch(Exception e)
 					{
 						bat 'exception in basic-work stage'
-						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/5"
+						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/-1"
 						error "This pipeline stops in basic_work"
 						echo e.getMessage()
 					}
@@ -44,14 +44,14 @@ pipeline
 					{
 						dir("dev/${workbench_name}")
 						{	
-							httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/2"
+							httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/40"
 							bat 'echo terraform initialization...'
 							bat 'terraform init'
 						}
 					}
 					catch(Exception e)
 					{
-						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/5"
+						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/-1"
 						echo err.getMessage()
 						error "This pipeline stops in terraform initialization"
 					}
@@ -68,7 +68,7 @@ pipeline
 				{
 					try 
 					{
-						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/3"
+						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/60"
 						dir("dev/${workbench_name}")
 						{
 							bat 'terraform plan -var-file="test.tfvars"'
@@ -76,7 +76,7 @@ pipeline
 					}
 					catch(Exception e)
 					{
-						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/5"
+						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/-1"
 						bat 'echo problem in terraform planning'
 						bat 'terraform destroy -auto-approve -var-file="test.tfvars"'
 						error "This pipeline stops in terraform plan"
@@ -94,7 +94,7 @@ pipeline
 				{
 					try 
 					{
-						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/4"
+						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/80"
 						dir("dev/${workbench_name}")
 						{
 							bat 'terraform apply -auto-approve -var-file="test.tfvars"'
@@ -102,7 +102,7 @@ pipeline
 					}
 					catch(Exception e)
 					{
-						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/5"
+						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/-1"
 						bat 'terraform destroy -auto-approve -var-file="test.tfvars"'
 						bat 'echo error in terraform apply'
 						error "This pipeline stops in terraform plan"
@@ -115,6 +115,7 @@ pipeline
 		{ 
             steps 
 			{
+				httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/100"
 				emailext body: "${currentBuild.number}", subject: "${workbench_name}", to: 'agrawalram020@gmail.com'
 			}
 		}
