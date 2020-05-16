@@ -15,16 +15,16 @@ pipeline {
 
                script{
                 def toJson = {
-    input ->
-    groovy.json.JsonOutput.toJson(input)
-}
-def body = [
-    displayName: [
-        text: "smoke test"],
-    description: [
-        text: "for smoke testing"],
-    genusTypeId: "type"
-]
+                        input ->
+                        groovy.json.JsonOutput.toJson(input)
+                         }
+            def body = [
+                displayName: [
+                    text: "smoke test"],
+                description: [
+                    text: "${dir_name}"],
+                genusTypeId: "type"
+            ]
 response = httpRequest consoleLogResponseBody: true, contentType: 'APPLICATION_JSON', httpMode: 'POST', requestBody: toJson(body), url: "http://127.0.0.1:8000/cwdname", validResponseCodes: '200'
                   }
                 }
