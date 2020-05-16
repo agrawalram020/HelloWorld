@@ -8,8 +8,19 @@ pipeline {
                 httpRequest "http://127.0.0.1:8000/demourlcheck/${var1}/${currentBuild.number}"
             }
         }
+        
+        stage('wait'){
+            steps {
+                  bat "echo wait start"
+                  sleep time: 2500, unit: 'MILLISECONDS'
+                  bat "echo wait end"
+                }
+        }
+        
+        
                 stage('send mail') {
             steps {
+                    
                     emailext body: 'jfldsfjdlsfjdslfjdslf', subject: 'from extended email demo', to: 'agrawalram020@gmail.com'
 
             }
