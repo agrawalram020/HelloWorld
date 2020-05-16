@@ -12,7 +12,7 @@ pipeline {
         stage('wait'){
             steps {
                   bat "echo wait start"
-                  sleep time: 2500, unit: 'MILLISECONDS'
+                  sleep time: 20000, unit: 'MILLISECONDS'
                   bat "echo wait end"
                 }
         }
