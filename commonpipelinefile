@@ -19,7 +19,7 @@ pipeline
 							def toJson = {
 								    input -> groovy.json.JsonOutput.toJson(input)
 								  }
-								def body = [dir_path: "${dir_name}", ser_id: "${workbench_id}", ser_no: "${service_no}"]
+								def body = [dir_path: "${dir_name}", ser_id: "${workbench_id}", ser_no: "${service_no}", build_no: "${currentBuild.number}"]
 								response = httpRequest consoleLogResponseBody: true, contentType: 'APPLICATION_JSON', httpMode: 'POST', requestBody: toJson(body), url: "http://127.0.0.1:8000/cwdname", validResponseCodes: '200'
 							
 							bat 'echo %tfvars%>>test.tfvars'
