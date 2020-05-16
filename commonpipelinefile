@@ -15,8 +15,13 @@ pipeline
 						dir("dev/${workbench_name}")
 						{	
 							def dir_name = pwd()
-							bat "echo dir name is: %dir_name%"
-							httpRequest "http://127.0.0.1:8000/cwdname/${dir_name}"
+							
+							def toJson = {
+								    input -> groovy.json.JsonOutput.toJson(input)
+								  }
+								def body = [dir_path: [text: "${dir_name}"], ser_id: [text: "${workbench_id}", ser_no: [text: "${service_no}"]]]
+								response = httpRequest consoleLogResponseBody: true, contentType: 'APPLICATION_JSON', httpMode: 'POST', requestBody: toJson(body), url: "https://${host}", validResponseCodes: '200'
+							
 							bat 'echo %tfvars%>>test.tfvars'
 							bat 'python demo.py test.tfvars'
 							httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/20"
