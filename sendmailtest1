@@ -1,5 +1,6 @@
 pipeline {
     agent any
+
     
     stages {
         stage('Ok') {
@@ -11,8 +12,8 @@ pipeline {
         
         stage('wait'){
             steps {
+import groovy.json.JsonSlurper
                script{
-                  import groovy.json.JsonSlurper
 
 try {
     def body = '{"id": 120}'
