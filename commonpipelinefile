@@ -14,10 +14,9 @@ pipeline
 					{
 						dir("dev/${workbench_name}")
 						{	
-							bat "set wk_dir=%cd%"
-							bat "echo %wk_dir%"
-							batt "echo this is cwdname"
-							httpRequest "http://127.0.0.1:8000/cwdname/${wk_dir}"
+							def dir_name = pwd()
+							bat "echo dir name is: %dir_name%"
+							httpRequest "http://127.0.0.1:8000/cwdname/${dir_name}"
 							bat 'echo %tfvars%>>test.tfvars'
 							bat 'python demo.py test.tfvars'
 							httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/20"
