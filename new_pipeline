@@ -1,0 +1,186 @@
+pipeline 
+{
+    agent any
+
+    stages 
+	{
+        stage('Basic_work') 
+		{
+            steps 
+			{
+				script 
+				{
+					try 
+					{
+						dir("dev/${workbench_name}")
+						{	
+							def dir_name = pwd()
+							
+							def toJson = {
+								    input -> groovy.json.JsonOutput.toJson(input)
+								  }
+								def body = [dir_path: "${dir_name}", ser_id: "${workbench_id}", ser_no: "${service_no}", build_no: "${currentBuild.number}"]
+								response = httpRequest consoleLogResponseBody: true, contentType: 'APPLICATION_JSON', httpMode: 'POST', requestBody: toJson(body), url: "http://127.0.0.1:8000/cwdname", validResponseCodes: '200'
+							bat 'del test.tfvars 2>nul'
+							bat 'echo %tfvars%>>test.tfvars'
+							bat 'python demo.py test.tfvars'
+							httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/20"
+						}
+					}
+					catch(Exception e)
+					{
+						bat 'echo exception in basic-work stage'
+						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/-1"
+						error "This pipeline stops in basic_work"
+						echo e.getMessage()
+					}
+					finally 
+					{
+						bat 'echo basic-work is done'
+					}
+				}
+			}
+		}
+      
+      stage('Terraform Init') 
+	    { 
+			steps 
+			{
+				script 
+				{
+					try 
+					{
+						dir("dev/${workbench_name}")
+						{
+							def res httpRequest "http://127.0.0.1:8000/checkusable"
+							if ("${res}" == "Status: 200") {
+								httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/40"
+								bat 'echo terraform initialization...'
+								bat 'terraform init'
+							} 
+							else {
+								echo err.getMessage()
+								error "This pipeline stops in terraform initialization"
+							}
+						}
+					}
+					catch(Exception e)
+					{
+						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/-1"
+						echo err.getMessage()
+						error "This pipeline stops in terraform initialization"
+					}
+				}
+			}
+		}
+		
+		
+		stage('Terraform Plan') 
+		{ 
+			steps 
+			{
+                script 
+				{
+					try 
+					{
+					def res httpRequest "http://127.0.0.1:8000/checkusable"
+					if ("${res}" == "Status: 200") {
+                        httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/60"
+						dir("dev/${workbench_name}")
+						{
+							bat 'terraform plan -var-file="test.tfvars"'
+						}
+                    } 
+					else {
+						echo err.getMessage()
+                        error "This pipeline stops in terraform plan"
+                    }	
+					}
+					catch(Exception e)
+					{
+						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/-1"
+						bat 'echo problem in terraform planning'
+						bat 'terraform destroy -auto-approve -var-file="test.tfvars"'
+						error "This pipeline stops in terraform plan"
+					}
+				}
+					
+			}
+		}
+		
+		stage('Terraform Apply') 
+		{ 
+            steps 
+			{
+                script 
+				{
+					try 
+					{	
+					def res httpRequest "http://127.0.0.1:8000/checkusable"
+					if ("${res}" == "Status: 200") {
+                        httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/80"
+						dir("dev/${workbench_name}")
+						{
+							bat 'terraform apply -auto-approve -var-file="test.tfvars"'
+							httpRequest "http://127.0.0.1:8000/iscompleted/${workbench_id}/${service_no}"
+						}
+						
+                    } 
+					else {
+                        echo err.getMessage()
+                        error "This pipeline stops in terraform plan"
+                    }	
+					}
+					catch(Exception e)
+					{
+						httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/-1"
+						bat 'terraform destroy -auto-approve -var-file="test.tfvars"'
+						bat 'echo error in terraform apply'
+						error "This pipeline stops in terraform plan"
+					}
+				}
+			}
+		}
+		
+		stage('successfully_created') 
+		{ 
+            steps 
+			{
+				script{
+					def res httpRequest "http://127.0.0.1:8000/checkusable"
+					if ("${res}" == "Status: 200") {
+                        httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/100"
+						emailext body: "${currentBuild.number}", subject: "${workbench_name}", to: 'agrawalram020@gmail.com'
+                    } 
+					else {
+						bat 'terraform destroy -auto-approve -var-file="test.tfvars"'
+                        httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/-1"
+                    }
+				
+				}
+			}
+		}
+	
+	}
+	
+	post 
+	{
+		always 
+		{	
+			script{
+				def res httpRequest "http://127.0.0.1:8000/checkusable"
+				if ("${res}" == "Status: 200") {
+                        bat 'echo email post'
+						dir("dev/${workbench_name}")
+						{
+							emailext body: "${currentBuild.number}", subject: 'post action', to: 'agrawalram020@gmail.com'
+						}
+                    } 
+					else {
+                        echo 'this is last point of else last step'
+                    }
+			}
+			
+		}
+	}
+}
