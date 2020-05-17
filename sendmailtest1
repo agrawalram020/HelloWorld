@@ -18,7 +18,7 @@ pipeline {
                 if ("${res}" == "Status: 200") {
                         echo 'ifsuccess'
                     } else {
-                        echo 'iffailed'
+                        echo "${res}"
                     }
                 // bat "echo ${res}"
                   }
