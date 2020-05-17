@@ -18,10 +18,10 @@ pipeline {
                 res = httpRequest consoleLogResponseBody: true, contentType: 'APPLICATION_JSON', httpMode: 'GET', url: "http://127.0.0.1:8000/ramcheck", validResponseCodes: '200'
                 if ("${res}" == "Status: 200") {
                         echo 'ifsuccess'
-                       bat "echo ${res.content}"
+                       bat "echo ${res.content['name']}"
                     } else {
                     echo 'iffail'
-                       bat "echo ${res.content}"
+                       bat "echo ${res.content['name']}"
                     }
                 // bat "echo ${res}"
                   }
