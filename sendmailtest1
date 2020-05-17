@@ -15,7 +15,7 @@ pipeline {
 
                script{
                 def res = httpRequest "http://127.0.0.1:8000/ramcheck"
-                bat "echo %res%"
+                bat "echo ${res}"
                   }
                 }
         }
