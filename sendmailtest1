@@ -14,13 +14,13 @@ pipeline {
             steps {
 
                script{
-                def res = httpRequest "http://127.0.0.1:8000/ramcheck"
+                def res, code = httpRequest "http://127.0.0.1:8000/ramcheck"
                 if ("${res}" == "Status: 200") {
                         echo 'ifsuccess'
-                       bat "echo ${res}"
+                       bat "echo ${code}"
                     } else {
                     echo 'iffail'
-                       bat "echo ${res}"
+                       bat "echo ${code}"
                     }
                 // bat "echo ${res}"
                   }
