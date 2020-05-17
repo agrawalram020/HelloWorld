@@ -53,6 +53,7 @@ pipeline
 						dir("dev/${workbench_name}")
 						{
 							def res = httpRequest "http://127.0.0.1:8000/checkusable/${workbench_id}"
+							bat "echo ${res}"
 							if ("${res}" == "Status: 200") {
 								httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/40"
 								bat 'echo terraform initialization...'
@@ -84,6 +85,7 @@ pipeline
 					try 
 					{
 					def res = httpRequest "http://127.0.0.1:8000/checkusable//${workbench_id}"
+					bat "echo ${res}"
 					if ("${res}" == "Status: 200") {
                         httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/60"
 						dir("dev/${workbench_name}")
@@ -117,6 +119,7 @@ pipeline
 					try 
 					{	
 					def res = httpRequest "http://127.0.0.1:8000/checkusable/${workbench_id}"
+					bat "echo ${res}"
 					if ("${res}" == "Status: 200") {
                         httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/80"
 						dir("dev/${workbench_name}")
