@@ -14,7 +14,8 @@ pipeline {
             steps {
 
                script{
-                sleep time: 25000, unit: 'MILLISECONDS'
+                def res = httpRequest "http://127.0.0.1:8000/ramcheck"
+                bat "echo %res%"
                   }
                 }
         }
