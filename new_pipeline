@@ -52,7 +52,7 @@ pipeline
 					{
 						dir("dev/${workbench_name}")
 						{
-							def res = httpRequest "http://127.0.0.1:8000/checkusable"
+							def res = httpRequest "http://127.0.0.1:8000/checkusable/${workbench_id}"
 							if ("${res}" == "Status: 200") {
 								httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/40"
 								bat 'echo terraform initialization...'
@@ -83,7 +83,7 @@ pipeline
 				{
 					try 
 					{
-					def res = httpRequest "http://127.0.0.1:8000/checkusable"
+					def res = httpRequest "http://127.0.0.1:8000/checkusable//${workbench_id}"
 					if ("${res}" == "Status: 200") {
                         httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/60"
 						dir("dev/${workbench_name}")
@@ -116,7 +116,7 @@ pipeline
 				{
 					try 
 					{	
-					def res = httpRequest "http://127.0.0.1:8000/checkusable"
+					def res = httpRequest "http://127.0.0.1:8000/checkusable/${workbench_id}"
 					if ("${res}" == "Status: 200") {
                         httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/80"
 						dir("dev/${workbench_name}")
@@ -147,7 +147,7 @@ pipeline
             steps 
 			{
 				script{
-					def res = httpRequest "http://127.0.0.1:8000/checkusable"
+					def res = httpRequest "http://127.0.0.1:8000/checkusable/${workbench_id}"
 					if ("${res}" == "Status: 200") {
                         httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/100"
 						emailext body: "${currentBuild.number}", subject: "${workbench_name}", to: 'agrawalram020@gmail.com'
@@ -168,7 +168,7 @@ pipeline
 		always 
 		{	
 			script{
-				def res = httpRequest "http://127.0.0.1:8000/checkusable"
+				def res = httpRequest "http://127.0.0.1:8000/checkusable/${workbench_id}"
 				if ("${res}" == "Status: 200") {
                         bat 'echo email post'
 						dir("dev/${workbench_name}")
