@@ -17,10 +17,10 @@ pipeline {
                 def res = httpRequest "http://127.0.0.1:8000/ramcheck"
                 if ("${res}" == "Status: 200") {
                         echo 'ifsuccess'
-                        echo "${res}"
+                       bat "echo ${res}"
                     } else {
                     echo 'iffail'
-                        echo "${res}"
+                       bat "echo ${res}"
                     }
                 // bat "echo ${res}"
                   }
