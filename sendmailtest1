@@ -16,7 +16,7 @@ pipeline {
                script{
                 //def res = httpRequest "http://127.0.0.1:8000/ramcheck"
                 res = httpRequest consoleLogResponseBody: true, contentType: 'APPLICATION_JSON', httpMode: 'GET', url: "http://127.0.0.1:8000/ramcheck", validResponseCodes: '200'
-                if ("${res}" == "Status: 200") {
+                if ("${res.content}" == "ram") {
                         echo 'ifsuccess'
                        bat "echo ${res.content}"
                     } else {
