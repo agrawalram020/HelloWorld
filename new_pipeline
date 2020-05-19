@@ -13,9 +13,11 @@ pipeline
 					try 
 					{
 						dir("dev/${workbench_name}")
-						{	
+						{
+						def res = httpRequest "http://127.0.0.1:8000/checkusable/${workbench_id}"
+						bat "echo ${res.content}"
+						if ("${res.content}" == '"yes"') {
 							def dir_name = pwd()
-							
 							def toJson = {
 								    input -> groovy.json.JsonOutput.toJson(input)
 								  }
@@ -25,6 +27,11 @@ pipeline
 							bat 'echo %tfvars%>>test.tfvars'
 							bat 'python demo.py test.tfvars'
 							httpRequest "http://127.0.0.1:8000/demourlcheck/${workbench_id}/${service_no}/20"
+						}
+						else {
+						echo err.getMessage()
+							error "This pipeline stops basic step"
+						    }	
 						}
 					}
 					catch(Exception e)
