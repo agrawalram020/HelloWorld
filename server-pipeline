@@ -1,0 +1,42 @@
+pipeline {
+   agent any
+
+   stages {
+      stage('Hello') {
+         steps {
+	    dir("dev/${workbench_name}"){
+               sh "printf ${tfvars}>>test.tfvars"
+               sh "printf ${tfvars}"
+               sh "python demo.py test.tfvars"
+               }
+         }
+      }
+      
+      stage('Terraform Init') { 
+			steps {
+            dir("dev/${workbench_name}"){
+            sh "terraform init"
+            }
+			}
+		}
+		
+		stage('Terraform Plan') { 
+			steps {
+               dir("dev/${workbench_name}"){
+               sh 'terraform plan -var-file="test.tfvars"'
+               }
+					
+			}
+		}
+		
+		stage('Terraform Apply') { 
+            steps {
+                sh 'echo "Apply"'
+                dir("dev/${workbench_name}"){
+               sh 'terraform apply -auto-approve -var-file="test.tfvars"'
+               }
+            }
+        }
+        
+   }
+}
